@@ -119,7 +119,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def Change(self, msg):#在界面上显示和打印
-        global ap_mac, reboot,num
+        global ap_mac, reboot, num
         if 'print' in msg:
             self.textBrowser.append(msg.split('/')[1])
         if 'success'in msg:
@@ -194,14 +194,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.lineEdit_3.setText(randomcode)  # 填充随机码
             self.code128(randomcode)
 
-            value = 1  # 传给多线程，标志mac已录入
 
         else:
             ap_mac = self.lineEdit.text()  # ap的mac
             cpe_mac = self.lineEdit_2.text()  # cpe的mac
             randomcode_set = self.lineEdit_3.text()#扫码录入的随机密码
 
-            value = 1  # 传给多线程，标志mac已录入
+        value = 1  # 传给多线程，标志mac已录入
 
 
 
@@ -212,7 +211,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         reply = QMessageBox.question(self, 'Message',
                                      str +'       ', QMessageBox.Yes)
 
-    def code128(self,code):
+    def code128(self,code):#生成条形码
         barcode.generate('Code128', code,
                                  writer=barcode.writer.ImageWriter(),
                                  output='ap_mac1',
@@ -257,7 +256,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 
-class New_Thread(QThread):
+class New_Thread(QThread):#线程
     _signal = pyqtSignal(str)
     def __init__(self, parent=None):
         super(New_Thread, self).__init__(parent)
@@ -302,9 +301,8 @@ class New_Thread(QThread):
         if str1.find("mac had Changed") == 0:
             self._signal.emit('success/')
         while 1:
-            if reboot == 1:
-                # ssh.exec_command('reboot')
-                ssh.exec_command('echo ok')
+            if reboot == 1:#收到reboot == 1 变化
+                ssh.exec_command('reboot')
                 self._signal.emit('print/修改mac成功，板子重启生效中。。。。。。')
                 self._signal.emit('record/')
                 reboot  = 0
