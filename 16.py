@@ -257,7 +257,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 class New_Thread(QThread):#线程
-    _signal = pyqtSignal(str)
+    _signal = QtCore.pyqtSignal(str)
     def __init__(self, parent=None):
         super(New_Thread, self).__init__(parent)
 
@@ -295,6 +295,7 @@ class New_Thread(QThread):#线程
             stdin, stdout, stderr = ssh.exec_command("/sbin/chmac.sh " + cpe_mac + ' ' + ap_mac + ' ' + randomcode + ' ' + mark_mode )#哪个模式，哪个mac写第一
         if mark_mode == 'AP':
             stdin, stdout, stderr = ssh.exec_command("/sbin/chmac.sh " + ap_mac + ' ' + cpe_mac + ' ' + randomcode_set + ' ' + mark_mode )
+        str1 = ''
         for line in stdout:
             str1 = line.strip('\n')
             # self._signal.emit('print/' + str1 + '\n')
