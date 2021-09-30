@@ -257,7 +257,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 class New_Thread(QThread):#线程
-    _signal = QtCore.pyqtSignal(str)
+    _signal = QtCore.pyqtSignal(str)#
     def __init__(self, parent=None):
         super(New_Thread, self).__init__(parent)
 
