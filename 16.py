@@ -126,11 +126,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.next()  # 页面清空，为下一台mac录入做准备
         if 'record' in msg:#记录写进的mac和随机密码
             if mark_mode == 'CPE':
-                self.textBrowser_2.append(
-                    str(num) + '、 ' + mark_mode + '  ' + cpe_mac + '  ' + ap_mac + '  ' + self.lineEdit_3.text() + '\n')
+                self.textBrowser_2.append( str(num) + '、 ' + mark_mode + '  ' + cpe_mac + '  ' + ap_mac + '  ' + self.lineEdit_3.text() + '\n')
             else:
-                self.textBrowser_2.append(
-                    str(num) + '、 ' + mark_mode + '  ' + ap_mac + '  ' + cpe_mac + '  ' + self.lineEdit_3.text() + '\n')
+                self.textBrowser_2.append(str(num) + '、 ' + mark_mode + '  ' + ap_mac + '  ' + cpe_mac + '  ' + self.lineEdit_3.text() + '\n')
+            f = open('录入记录.txt', 'a')
+            f.write(str(num) + '、 ' + mark_mode + '  ' + ap_mac + '  ' + cpe_mac + '  ' + self.lineEdit_3.text() + '\n')
+            f.close()
         if 'green' in msg:
             self.textBrowser_3.setStyleSheet('background-color: rgb(0, 255, 0);')#ping机器状态按钮变绿色
         if 'white'   in msg:
